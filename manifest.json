@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "stay_logger",
+  "version": "0.0.1",
+
+  "description": "notification from appear.in",
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*"],
+      "js": ["jquery.min.js", "main.js"],
+      "run_at": "document_start"
+    }
+  ],
+
+  "options_page": "options.html"
+}
