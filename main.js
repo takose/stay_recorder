@@ -7,13 +7,21 @@ $(function () {
     });
   };
 
-  promisedSendMessage('get_callback_url')
-    .then(function(v1) {
-      return promisedSendMessage('get_name').then(function(v2) {
-        return Promise.resolve({ callback_url: v1.data, name: v2.data });
-      });
-    })
+  Promise.all([
+    promisedSendMessage('get_callback_url'),
+    promisedSendMessage('get_name'),
+  ])
     .then(function(v) {
-      console.log(v);
+      $.ajax({
+        url: v[0].data,
+        type: 'post',
+        data: JSON.stringify({
+          'status': 'enter',
+          'name': v[1].data,
+        }),
+        success: function (data) {
+          console.log(data)
+        }
+      });
     });
 });
