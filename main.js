@@ -1,19 +1,19 @@
 $(function () {
-  var callback_url;
-  chrome.runtime.sendMessage({method: "get_callback_url"}, function(response) {
-    callback_url = response.data;
-  });
-  window.onload = function(){
-    $.ajax({
-      url: callback_url,
-      type: 'post',
-      data: JSON.stringify({
-        'status': 'enter',
-      }),
-      success: function (data) {
-        console.log(data)
-      }
+  var promisedSendMessage = function(method) {
+    return new Promise(function(resolve) {
+      chrome.runtime.sendMessage({ method: method }, function(response) {
+        resolve(response);
+      });
     });
   };
-});
 
+  promisedSendMessage('get_callback_url')
+    .then(function(v1) {
+      return promisedSendMessage('get_name').then(function(v2) {
+        return Promise.resolve({ callback_url: v1.data, name: v2.data });
+      });
+    })
+    .then(function(v) {
+      console.log(v);
+    });
+});
