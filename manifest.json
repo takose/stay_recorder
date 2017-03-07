@@ -5,7 +5,7 @@
 
   "description": "notification from appear.in",
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["jquery.min.js", "background.js"]
   },
   "content_scripts": [
     {
