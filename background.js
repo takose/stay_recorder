@@ -3,18 +3,20 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   name = localStorage.getItem('name');
   event_name = request.method;
   if (request.method == "entered" || request.method == "left"){
-    sendResponse({data: 'succeed'});
-    $.ajax({
-      url: callback_url,
-      type: 'post',
-      data: JSON.stringify({
+    var params = {
+      method: 'POST',
+      body: JSON.stringify({
         'event_name': event_name,
         'name': name,
       }),
-      success: function (data) {
-        console.log(data)
-      }
-    });
+    };
+    console.log(params)
+    fetch(callback_url, params)
+    .then(function(response){
+      console.log(response)
+    })
+
+    sendResponse({data: 'succeed'});
   } else {
     sendResponse({data: "error: undefined method"});
   }
