@@ -5,12 +5,12 @@
 
   "description": "notification from appear.in",
   "background": {
-    "scripts": ["jquery.min.js", "background.js"]
+    "scripts": ["background.js"]
   },
   "content_scripts": [
     {
       "matches": ["https://github.com/*"],
-      "js": ["jquery.min.js", "main.js"],
+      "js": ["main.js"],
       "run_at": "document_start"
     }
   ],
